@@ -41,6 +41,7 @@ Thumbs.db
 ######################
 node_modules/
 bower_components/
-examples/**/index.js
+demos/**/bundle.js
+demos/**/bundle.js.map
 build/
 lib/
