@@ -68,4 +68,5 @@ module.exports = {
     extensions: ['', '.js', '.jsx']
   },
   plugins: plugins,
+  eslint: {configFile: '.eslintrc'},
 };
