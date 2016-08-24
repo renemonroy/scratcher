@@ -44,7 +44,7 @@ module.exports = {
   devtool: devtool,
   entry: entry,
   output: {
-    filename: '[name]/all.js',
+    filename: '[name]/bundle.js',
     publicPath: '/demos/',
     path: __dirname + '/demos/',
   },
@@ -58,7 +58,14 @@ module.exports = {
       {
         test: /\.css$/,
         loaders: ['style', 'css'],
-      }
+      },
+    ],
+    preLoaders: [
+      {
+        test: /\.jsx?$/,
+        loader: 'eslint',
+        exclude: /build|lib|bower_components|node_modules/
+      },
     ],
     noParse: [
       path.join(__dirname, 'node_modules', 'babel-core', 'browser.min.js')
