@@ -1,0 +1,62 @@
+{
+  "name": "@renemonroy/nui-scratcher",
+  "version": "0.0.1",
+  "description": "A component that has a hidden image which can be revealed by scratching over it.",
+  "main": "lib/index.js",
+  "scripts": {
+    "start": "node server.js",
+    "clean": "rimraf lib dist",
+    "build:demos": "webpack",
+    "build:lib": "babel src --out-dir lib",
+    "build:dist": "webpack --config webpack.prod.config.js",
+    "prepublish": "npm run clean && npm run build:lib && npm run build:dist"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/renemonroy/scratcher.git"
+  },
+  "keywords": [
+    "react",
+    "nui",
+    "scratcher",
+    "canvas",
+    "image"
+  ],
+  "author": "renemonroy",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/renemonroy/scratcher/issues"
+  },
+  "homepage": "https://github.com/renemonroy/scratcher#readme",
+  "devDependencies": {
+    "babel-cli": "^6.11.4",
+    "babel-core": "^6.13.2",
+    "babel-eslint": "^6.1.2",
+    "babel-loader": "^6.2.5",
+    "babel-plugin-transform-decorators-legacy": "^1.3.4",
+    "babel-plugin-transform-react-display-name": "^6.8.0",
+    "babel-polyfill": "^6.13.0",
+    "babel-preset-es2015": "^6.13.2",
+    "babel-preset-react": "^6.11.1",
+    "babel-preset-stage-0": "^6.5.0",
+    "babel-preset-stage-1": "^6.13.0",
+    "babel-preset-stage-2": "^6.13.0",
+    "babel-runtime": "^6.11.6",
+    "eslint": "^3.3.1",
+    "eslint-config-airbnb": "^10.0.1",
+    "eslint-config-airbnb-base": "^5.0.3",
+    "eslint-plugin-import": "^1.14.0",
+    "eslint-plugin-jsx-a11y": "^2.1.0",
+    "eslint-plugin-react": "^6.1.2",
+    "linter-jscs": "^3.4.3",
+    "react-hot-loader": "^1.3.0",
+    "url-loader": "^0.5.7",
+    "webpack": "^1.13.2",
+    "webpack-dev-server": "^1.15.0"
+  },
+  "dependencies": {
+    "react": "^15.3.1",
+    "react-dom": "^15.3.1",
+    "rimraf": "^2.5.4"
+  }
+}
