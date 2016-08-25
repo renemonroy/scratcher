@@ -1,12 +1,10 @@
-'use strict';
-
 process.env.NODE_ENV = process.env.NODE_ENV || 'production';
 
 var webpack = require('webpack');
 var path = require('path');
 
 var loaders = ['babel'];
-var port = process.env.PORT || 3000;
+var port = process.env.PORT || 8080;
 
 var devtool;
 var plugins = [
@@ -27,7 +25,7 @@ if (process.env.NODE_ENV === 'development') {
   ]);
   entry = Object.keys(entry).reduce( function(result, key) {
     result[key] = [
-      'webpack-dev-server/client?http:0.0.0.0:' + port,
+      'webpack-dev-server/client?http://localhost:' + port,
       'webpack/hot/only-dev-server',
       entry[key]
     ];

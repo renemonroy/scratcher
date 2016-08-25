@@ -6,6 +6,7 @@
   "scripts": {
     "start": "node server.js",
     "clean": "rimraf lib dist",
+    "dev": "NODE_ENV=development webpack-dev-server --colors --port 8080",
     "build:demos": "webpack",
     "build:lib": "babel src --out-dir lib",
     "build:dist": "webpack --config webpack.prod.config.js",
