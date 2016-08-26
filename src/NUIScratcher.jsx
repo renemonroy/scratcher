@@ -1,3 +1,4 @@
+/* eslint-env browser */
 import React, { Component, PropTypes } from 'react';
 import classNames from 'classnames';
 import { default as cn } from './NUIScratcherClasses';
@@ -24,6 +25,18 @@ class NUIScratcher extends Component {
     };
   }
 
+  componentDidMount() {
+    this.setImageInCanvas();
+  }
+
+  setImageInCanvas() {
+    const { image } = this.props;
+    const img = new Image(375, 265);
+    const ctx = this.canvas.getContext('2d');
+    img.onload = () => ctx.drawImage(img, 0, 0, 375, 265);
+    img.src = image.assets.default;
+  }
+
   getBlurValue(percent) {
     return (100 - (percent * 100)) / 5;
   }
@@ -32,52 +45,44 @@ class NUIScratcher extends Component {
     return Object.keys(this.props.image).length > 0;
   }
 
-  renderImageLayer() {
+  render() {
     const { assets } = this.props.image;
     const { previewImageLoaded, largeImageLoaded } = this.state;
     return (
-      <div className={classNames(cn.NUIScratcherImageLayer)}>
-        <div className={classNames(cn.NUIScratcherImageRowWrapper)}>
-          <div className={classNames(cn.NUIScratcherImageRow)}>
-            <img
-              src={assets.preload}
-              role="presentation"
-              onLoad={() => this.setState({ previewImageLoaded: true })}
-              className={classNames(
-                cn.NUIScratcherPreviewImage,
-                previewImageLoaded ? 'loaded' : null
-              )}
-            />
-            {previewImageLoaded ?
-              <img
-                src={assets.default}
-                role="presentation"
-                onLoad={() => this.setState({ largeImageLoaded: true })}
-                className={classNames(
-                  cn.NUIScratcherDefaultImage,
-                  largeImageLoaded ? 'loaded' : null
-                )}
-                style={{ filter: `blur(${this.getBlurValue(1)}px)` }}
-              /> :
-              null
-            }
-          </div>
+      <div className={classNames(cn.NUIScratcher)}>
+        <div className={classNames(cn.NUICanvasLayer)}>
+          <canvas
+            ref={(c) => { this.canvas = c; }}
+            className={classNames(cn.NUICanvas)}
+            width="375"
+            height="265"
+          />
         </div>
-      </div>
-    );
-  }
-
-  renderCanvasLayer() {
-    return (
-      <div className={classNames(cn.NUIScratcherCanvasLayer)} />
-    );
-  }
-
-  render() {
-    return (
-      <div className="nui-scratcher">
-        {this.hasImageData() ? this.renderImageLayer() : null }
-        {this.renderCanvasLayer()}
+        {this.hasImageData() ?
+          <div className={classNames(cn.NUIImageLayer)}>
+            <div className={classNames(cn.NUIImageRowWrapper)}>
+              <div className={classNames(cn.NUIImageRow)}>
+                <img
+                  src={assets.preload}
+                  role="presentation"
+                  onLoad={() => this.setState({ previewImageLoaded: true })}
+                  className={classNames(cn.NUIPreviewImage, previewImageLoaded ? 'loaded' : null)}
+                />
+                {previewImageLoaded ?
+                  <img
+                    src={assets.mask}
+                    role="presentation"
+                    onLoad={() => this.setState({ largeImageLoaded: true })}
+                    className={classNames(cn.NUIDefaultImage, largeImageLoaded ? 'loaded' : null)}
+                    style={{ filter: `blur(${this.getBlurValue(1)}px)` }}
+                  /> :
+                  null
+                }
+              </div>
+            </div>
+          </div> :
+          null
+        }
       </div>
     );
   }
