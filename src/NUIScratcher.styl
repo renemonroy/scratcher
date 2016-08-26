@@ -1,0 +1,22 @@
+.nui-scratcher-image-row
+  width: 375px
+  height: 265px
+  overflow: hidden
+  position: relative
+
+  > img
+    display: block
+    width: 100%
+    height: 100%
+    margin: 0 auto
+    transition: opacity 500ms linear
+    opacity: 0
+    position: absolute
+
+    &.nui-scratcher-preview-image
+      &.loaded
+        opacity: 0.35
+
+    &.nui-scratcher-default-image
+      &.loaded
+        opacity: 1

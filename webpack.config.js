@@ -54,8 +54,8 @@ module.exports = {
         loaders: loaders,
       },
       {
-        test: /\.css$/,
-        loaders: ['style', 'css'],
+        test: /\.styl$/,
+        loader: 'style-loader!css-loader!stylus-loader',
       },
     ],
     preLoaders: [
