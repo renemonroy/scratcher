@@ -31,9 +31,11 @@ class NUIScratcher extends Component {
 
   setImageInCanvas() {
     const { image } = this.props;
-    const img = new Image(375, 265);
-    const ctx = this.canvas.getContext('2d');
-    img.onload = () => ctx.drawImage(img, 0, 0, 375, 265);
+    const { canvasWidth, canvasHeight } = this.state;
+    const img = new Image(canvasWidth, canvasHeight);
+    this.ctx = this.canvas.getContext('2d');
+    img.onload = () => this.ctx.drawImage(img, 0, 0, 375, 265);
+    img.crossOrigin = 'anonymous';
     img.src = image.assets.default;
   }
 

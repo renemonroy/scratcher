@@ -3,9 +3,9 @@ import NUIScratcher from '../../src/NUIScratcher';
 
 const myImage = {
   assets: {
-    preload: 'https://firebasestorage.googleapis.com/v0/b/nike-proto.appspot.com/o/preload.jpg?alt=media&token=63a63e02-1aa9-48a1-9185-5a2096dcde28',
-    default: 'https://firebasestorage.googleapis.com/v0/b/nike-proto.appspot.com/o/normal.jpg?alt=media&token=07274c0e-7005-485a-81bf-895cb1475a3c',
-    mask: 'https://firebasestorage.googleapis.com/v0/b/nike-proto.appspot.com/o/colored.png?alt=media&token=317f21a4-03d6-4b1c-ad28-c8217c23b6f3',
+    preload: 'https://storage.googleapis.com/nike-protos-141821.appspot.com/snkrs/preload.jpg',
+    default: 'https://storage.googleapis.com/nike-protos-141821.appspot.com/snkrs/normal.jpg',
+    mask: 'https://storage.googleapis.com/nike-protos-141821.appspot.com/snkrs/colored.jpg',
   },
 };
 
