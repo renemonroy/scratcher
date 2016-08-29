@@ -6,7 +6,7 @@ var path = require('path');
 var config = {
   devtool: 'sourcemap',
   entry: {
-    index: './src/index.jsx',
+    index: './src/NUIScratcher.jsx',
   },
   output: {
     path: path.join(__dirname, 'dist'),
