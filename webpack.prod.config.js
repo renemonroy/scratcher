@@ -17,10 +17,16 @@ var config = {
     libraryTarget: 'umd',
   },
   module: {
-    loaders: [{
-      test: /\.(js|jsx)/,
-      loader: 'babel',
-    }],
+    loaders: [
+      {
+        test: /\.(js|jsx)/,
+        loader: 'babel',
+      },
+      {
+        test: /\.styl$/,
+        loader: 'style-loader!css-loader!stylus-loader',
+      },
+    ],
   },
   plugins: [],
   resolve: {
