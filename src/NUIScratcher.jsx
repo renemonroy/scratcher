@@ -129,7 +129,6 @@ class NUIScratcher extends Component {
 
   handlePercentage(filledInPixels) {
     const fip = filledInPixels || 0;
-    console.log(`${fip}%`);
     if (fip > 50) {
       this.setState({ disableCanvas: true });
     }
