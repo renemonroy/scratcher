@@ -27,7 +27,6 @@ class NUIScratcher extends Component {
     this.state = {
       previewImageLoaded: false,
       largeImageLoaded: false,
-      disableCanvas: false,
     };
   }
 
@@ -102,7 +101,6 @@ class NUIScratcher extends Component {
   handleMouseDown(e) {
     this.isDrawing = true;
     this.lastPoint = this.getMousePosition(e, this.canvas);
-    // console.log('>>> last point:', this.lastPoint);
   }
 
   handleMouseMove(e) {
@@ -114,10 +112,10 @@ class NUIScratcher extends Component {
     let x;
     let y;
     for (let i = 0; i < dist; i++) {
-      x = (this.lastPoint.x + (Math.sin(angle) * i)) - 10;
-      y = (this.lastPoint.y + (Math.cos(angle) * i)) - 10;
+      x = (this.lastPoint.x + (Math.sin(angle) * i)) - 9;
+      y = (this.lastPoint.y + (Math.cos(angle) * i)) - 9;
       this.ctx.globalCompositeOperation = 'destination-out';
-      this.ctx.drawImage(this.brush, x, y, 20, 20);
+      this.ctx.drawImage(this.brush, x, y, 18, 18);
     }
     this.lastPoint = currentPoint;
     this.handlePercentage(this.getFilledInPixels(32));
@@ -128,10 +126,9 @@ class NUIScratcher extends Component {
   }
 
   handlePercentage(filledInPixels) {
-    const fip = filledInPixels || 0;
-    if (fip > 50) {
-      this.setState({ disableCanvas: true });
-    }
+    const fip = (filledInPixels || 0) * 10;
+    const opacity = -(fip - 100) / 100;
+    this.canvas.style.opacity = fip > 75 ? 0 : opacity;
   }
 
   hasImageData() {
@@ -141,7 +138,7 @@ class NUIScratcher extends Component {
   render() {
     const { canvasWidth, canvasHeight } = this.props;
     const { assets } = this.props.image;
-    const { previewImageLoaded, largeImageLoaded, disableCanvas } = this.state;
+    const { previewImageLoaded, largeImageLoaded } = this.state;
     return (
       <div className={classNames(cn.NUIScratcher)}>
         {this.hasImageData() ?
@@ -170,21 +167,18 @@ class NUIScratcher extends Component {
           null
         }
         <div className={classNames(cn.NUICanvasLayer)}>
-          {disableCanvas ?
-            null :
-            <canvas
-              ref={(c) => { this.canvas = c; }}
-              className={classNames(cn.NUICanvas)}
-              width={canvasWidth}
-              height={canvasHeight}
-              onMouseDown={::this.handleMouseDown}
-              onTouchStart={::this.handleMouseDown}
-              onMouseMove={::this.handleMouseMove}
-              onTouchMove={::this.handleMouseMove}
-              onMouseUp={::this.handleMouseUp}
-              onTouchEnd={::this.handleMouseUp}
-            />
-          }
+          <canvas
+            ref={(c) => { this.canvas = c; }}
+            className={classNames(cn.NUICanvas)}
+            width={canvasWidth}
+            height={canvasHeight}
+            onMouseDown={::this.handleMouseDown}
+            onTouchStart={::this.handleMouseDown}
+            onMouseMove={::this.handleMouseMove}
+            onTouchMove={::this.handleMouseMove}
+            onMouseUp={::this.handleMouseUp}
+            onTouchEnd={::this.handleMouseUp}
+          />
         </div>
       </div>
     );
