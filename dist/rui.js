@@ -101,8 +101,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	    _this.state = {
 	      previewImageLoaded: false,
-	      largeImageLoaded: false,
-	      disableCanvas: false
+	      largeImageLoaded: false
 	    };
 	    return _this;
 	  }
@@ -134,7 +133,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        return _this2.ctx.drawImage(img, 0, 0, 375, 265);
 	      };
 	      img.crossOrigin = 'anonymous';
-	      img.src = image.assets.default;
+	      img.src = image;
 	    }
 	  }, {
 	    key: 'setBrushInCanvas',
@@ -199,7 +198,6 @@ return /******/ (function(modules) { // webpackBootstrap
 	    value: function handleMouseDown(e) {
 	      this.isDrawing = true;
 	      this.lastPoint = this.getMousePosition(e, this.canvas);
-	      // console.log('>>> last point:', this.lastPoint);
 	    }
 	  }, {
 	    key: 'handleMouseMove',
@@ -212,10 +210,10 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var x = void 0;
 	      var y = void 0;
 	      for (var i = 0; i < dist; i++) {
-	        x = this.lastPoint.x + Math.sin(angle) * i - 10;
-	        y = this.lastPoint.y + Math.cos(angle) * i - 10;
+	        x = this.lastPoint.x + Math.sin(angle) * i - 9;
+	        y = this.lastPoint.y + Math.cos(angle) * i - 9;
 	        this.ctx.globalCompositeOperation = 'destination-out';
-	        this.ctx.drawImage(this.brush, x, y, 20, 20);
+	        this.ctx.drawImage(this.brush, x, y, 18, 18);
 	      }
 	      this.lastPoint = currentPoint;
 	      this.handlePercentage(this.getFilledInPixels(32));
@@ -228,10 +226,9 @@ return /******/ (function(modules) { // webpackBootstrap
 	  }, {
 	    key: 'handlePercentage',
 	    value: function handlePercentage(filledInPixels) {
-	      var fip = filledInPixels || 0;
-	      if (fip > 50) {
-	        this.setState({ disableCanvas: true });
-	      }
+	      var fip = (filledInPixels || 0) * 10;
+	      var opacity = -(fip - 100) / 100;
+	      this.canvas.style.opacity = fip > 75 ? 0 : opacity;
 	    }
 	  }, {
 	    key: 'hasImageData',
@@ -246,11 +243,11 @@ return /******/ (function(modules) { // webpackBootstrap
 	      var _props2 = this.props;
 	      var canvasWidth = _props2.canvasWidth;
 	      var canvasHeight = _props2.canvasHeight;
-	      var assets = this.props.image.assets;
+	      var mask = _props2.mask;
+	      var preloader = _props2.preloader;
 	      var _state2 = this.state;
 	      var previewImageLoaded = _state2.previewImageLoaded;
 	      var largeImageLoaded = _state2.largeImageLoaded;
-	      var disableCanvas = _state2.disableCanvas;
 	
 	      return _react2.default.createElement(
 	        'div',
@@ -265,7 +262,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	              'div',
 	              { className: (0, _classnames2.default)(_NUIScratcherClasses2.default.NUIImageRow) },
 	              _react2.default.createElement('img', {
-	                src: assets.preload,
+	                src: preloader,
 	                role: 'presentation',
 	                onLoad: function onLoad() {
 	                  return _this3.setState({ previewImageLoaded: true });
@@ -273,7 +270,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	                className: (0, _classnames2.default)(_NUIScratcherClasses2.default.NUIPreviewImage, previewImageLoaded ? 'loaded' : null)
 	              }),
 	              previewImageLoaded ? _react2.default.createElement('img', {
-	                src: assets.mask,
+	                src: mask,
 	                role: 'presentation',
 	                onLoad: function onLoad() {
 	                  return _this3.setState({ largeImageLoaded: true });
@@ -287,7 +284,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	        _react2.default.createElement(
 	          'div',
 	          { className: (0, _classnames2.default)(_NUIScratcherClasses2.default.NUICanvasLayer) },
-	          disableCanvas ? null : _react2.default.createElement('canvas', {
+	          _react2.default.createElement('canvas', {
 	            ref: function ref(c) {
 	              _this3.canvas = c;
 	            },
@@ -308,11 +305,12 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	  return NUIScratcher;
 	}(_react.Component), _class.displayName = 'NUIScratcher', _class.propTypes = {
-	  image: _react.PropTypes.object.isRequired,
 	  canvasWidth: _react.PropTypes.number,
-	  canvasHeight: _react.PropTypes.number
+	  canvasHeight: _react.PropTypes.number,
+	  preloader: _react.PropTypes.string.isRequired,
+	  image: _react.PropTypes.string.isRequired,
+	  mask: _react.PropTypes.string.isRequired
 	}, _class.defaultProps = {
-	  image: {},
 	  canvasWidth: 375,
 	  canvasHeight: 265
 	}, _temp);
@@ -484,7 +482,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	
 	
 	// module
-	exports.push([module.id, ".nui-scratcher {\n  position: relative;\n  width: 375px;\n  height: 265px;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  -o-user-select: none;\n  user-select: none;\n}\n.nui-scratcher-canvas-layer {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.nui-scratcher-image-layer {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  pointer-events: none;\n}\n.nui-scratcher-image-row {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  position: relative;\n}\n.nui-scratcher-image-row > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n  margin: 0 auto;\n  transition: opacity 500ms linear;\n  opacity: 0;\n  position: absolute;\n}\n.nui-scratcher-image-row > img.nui-scratcher-preview-image.loaded {\n  opacity: 0.35;\n}\n.nui-scratcher-image-row > img.nui-scratcher-default-image.loaded {\n  opacity: 1;\n}\n", ""]);
+	exports.push([module.id, ".nui-scratcher {\n  position: relative;\n  width: 375px;\n  height: 265px;\n  -webkit-user-select: none;\n  -moz-user-select: none;\n  -ms-user-select: none;\n  -o-user-select: none;\n  user-select: none;\n}\n.nui-scratcher-canvas-layer {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n}\n.nui-scratcher-canvas-layer canvas {\n  transition: opacity 500ms linear;\n}\n.nui-scratcher-image-layer {\n  width: 100%;\n  height: 100%;\n  position: absolute;\n  pointer-events: none;\n}\n.nui-scratcher-image-row {\n  width: 100%;\n  height: 100%;\n  overflow: hidden;\n  position: relative;\n}\n.nui-scratcher-image-row > img {\n  display: block;\n  width: 100%;\n  height: 100%;\n  margin: 0 auto;\n  transition: opacity 500ms linear;\n  opacity: 0;\n  position: absolute;\n}\n.nui-scratcher-image-row > img.nui-scratcher-preview-image.loaded {\n  opacity: 0.35;\n}\n.nui-scratcher-image-row > img.nui-scratcher-default-image.loaded {\n  opacity: 1;\n}\n", ""]);
 	
 	// exports
 
