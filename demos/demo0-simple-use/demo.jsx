@@ -10,12 +10,13 @@ const myImage = {
 };
 
 const Demo = function Demo() {
+  const img = myImage.assets;
   return (
     <div id="demo0-simple-use">
-      <div className="header bg-black prl4-sm pt2-sm pb2-sm">
+      <div className="header bg-black prl4-sm pt3-sm pb3-sm">
         <h3 className="ncss-brand text-color-white">Demo 0 - Simple Use</h3>
       </div>
-      <NUIScratcher image={myImage} />
+      <NUIScratcher preloader={img.preload} mask={img.mask} image={img.default} />
     </div>
   );
 };

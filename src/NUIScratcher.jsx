@@ -11,13 +11,14 @@ class NUIScratcher extends Component {
   static displayName = 'NUIScratcher';
 
   static propTypes = {
-    image: PropTypes.object.isRequired,
     canvasWidth: PropTypes.number,
     canvasHeight: PropTypes.number,
+    preloader: PropTypes.string.isRequired,
+    image: PropTypes.string.isRequired,
+    mask: PropTypes.string.isRequired,
   };
 
   static defaultProps = {
-    image: {},
     canvasWidth: 375,
     canvasHeight: 265,
   };
@@ -46,7 +47,7 @@ class NUIScratcher extends Component {
     this.ctx = this.canvas.getContext('2d');
     img.onload = () => this.ctx.drawImage(img, 0, 0, 375, 265);
     img.crossOrigin = 'anonymous';
-    img.src = image.assets.default;
+    img.src = image;
   }
 
   setBrushInCanvas() {
@@ -136,8 +137,7 @@ class NUIScratcher extends Component {
   }
 
   render() {
-    const { canvasWidth, canvasHeight } = this.props;
-    const { assets } = this.props.image;
+    const { canvasWidth, canvasHeight, mask, preloader } = this.props;
     const { previewImageLoaded, largeImageLoaded } = this.state;
     return (
       <div className={classNames(cn.NUIScratcher)}>
@@ -146,14 +146,14 @@ class NUIScratcher extends Component {
             <div className={classNames(cn.NUIImageRowWrapper)}>
               <div className={classNames(cn.NUIImageRow)}>
                 <img
-                  src={assets.preload}
+                  src={preloader}
                   role="presentation"
                   onLoad={() => this.setState({ previewImageLoaded: true })}
                   className={classNames(cn.NUIPreviewImage, previewImageLoaded ? 'loaded' : null)}
                 />
                 {previewImageLoaded ?
                   <img
-                    src={assets.mask}
+                    src={mask}
                     role="presentation"
                     onLoad={() => this.setState({ largeImageLoaded: true })}
                     className={classNames(cn.NUIDefaultImage, largeImageLoaded ? 'loaded' : null)}
