@@ -12,7 +12,9 @@ const myImage = {
 const Demo = function Demo() {
   return (
     <div id="demo0-simple-use">
-      <p>Demo 0 - Simple Use</p>
+      <div className="header bg-black prl4-sm pt2-sm pb2-sm">
+        <h3 className="ncss-brand text-color-white">Demo 0 - Simple Use</h3>
+      </div>
       <NUIScratcher image={myImage} />
     </div>
   );
